@@ -1,19 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.http import JsonResponse, HttpResponse
 
 
 def Home(request):
+    return redirect("/swagger")
 
-    allPaths = {
-        "home": "/",
-        "adminApi": "/adminApi",
-        "userApi": "/userApi",
-        "vendorApi": "/vendorApi",
-        "swagger": "/swagger",
-        "redoc": "/redoc",
-    }
-
-    # return JsonResponse({'message': 'success its working'} )
-    return JsonResponse(allPaths)

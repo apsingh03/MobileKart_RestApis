@@ -333,15 +333,15 @@ def AddShipping_view(request):
 
 
 @api_view(['GET' ])
-def GetSubCategoryByID_view(request , pk):
+def GetSubCategoryByID_view(request , catName):
 
     msg = {}
       
     if request.method == "GET":
         # print("----------Line no 275 GET VendorAPI----------")
-        # print("id- " , pk )
+        # print("id- " , catName )
 
-        getCategory = SubCategory.objects.filter(cat_name = pk).values()
+        getCategory = SubCategory.objects.filter(cat_name = catName).values()
 
         # print(getCategory)
         # data = getCategory[0]['cat_name']
@@ -607,7 +607,7 @@ def addProduct_view(request):
 
 
 @api_view(["GET"])
-def FilterProductBySlug_view(request, pk):
+def FilterProductBySlug_view(request, filterSlug):
 
     msg = {}
 
@@ -616,9 +616,9 @@ def FilterProductBySlug_view(request, pk):
         # print("----------Line no 275 GET VendorAPI----------")
         # print("pk- ", pk)
 
-        extractPk = pk.split("-")
+        extractPk = filterSlug.split("-")
 
-        # print("extractPk- ", extractPk )
+        print("extractPk- ", extractPk )
 
       
 
@@ -721,23 +721,23 @@ def FilterProductBySlug_view(request, pk):
 
 
 @api_view(['PUT' ])
-def SetFeaturedProductById_view(request , pk1, pk2):
+def SetFeaturedProductById_view(request , productId, featuredStatus):
 
     msg = {}
       
     if request.method == "PUT":
         # print("----------Line no 275 GET VendorAPI----------")
-        print("id- " , pk1  , pk2)
+        # print("id- " , productId  , featuredStatus)
 
         # getCategory = addProduct.objects.filter(id = pk1).values()
-        query = addProduct.objects.filter(id = pk1).exists()
+        query = addProduct.objects.filter(id = productId).exists()
 
         if query:
 
 
-            if pk2 == "notFeatured":
+            if featuredStatus == "notFeatured":
 
-                queryGet = addProduct.objects.get( id = pk1 )
+                queryGet = addProduct.objects.get( id = productId )
                 queryGet.setFeatured = 1
                 queryGet.save()
 
@@ -748,9 +748,9 @@ def SetFeaturedProductById_view(request , pk1, pk2):
 
                 return JsonResponse(msg)
             
-            if pk2 == "itsFeatured":
+            if featuredStatus == "itsFeatured":
 
-                queryGet = addProduct.objects.get( id = pk1 )
+                queryGet = addProduct.objects.get( id = productId )
                 queryGet.setFeatured = 0
                 queryGet.save()
 
@@ -766,7 +766,7 @@ def SetFeaturedProductById_view(request , pk1, pk2):
 
 
 @api_view(['PUT' ])
-def UpdateProductByID_view(request , pk):
+def UpdateProductByID_view(request , productId):
 
     msg = {}
       
@@ -822,7 +822,7 @@ def UpdateProductByID_view(request , pk):
     
         
         try:
-            queryybn = addProduct.objects.filter(id = pk).update( venId_id = vendorIdd , name = productNamee ,  mrp = productMrpp, discountPercent = productDiscountt , 
+            queryybn = addProduct.objects.filter(id = productId).update( venId_id = vendorIdd , name = productNamee ,  mrp = productMrpp, discountPercent = productDiscountt , 
                             
                             productType = productTypee , Category = productCategoryy , subCategory = productSubCategoryDataa , 
 
@@ -856,25 +856,25 @@ def UpdateProductByID_view(request , pk):
           
 # pk is user id / pk2 is product ID
 @api_view(['DELETE'])
-def DeleteProductByID_view(request, pk1, pk2 ):
+def DeleteProductByID_view(request, vendorId, productId ):
     
     msg = {}
 
     if request.method == "DELETE":
 
         # print("----------Line no 257 POST userAPI- CartID---------")
-        # print("pk1- " , pk1)
-        # print("pk2- " , pk2)
+        print("vendorId- " , vendorId)
+        print("productId- " , productId)
 
         # MyModel.objects.filter(pk=some_value).update(field1='some value')
         
-        user_Exist = addProduct.objects.filter( venId_id = pk1, id  =  pk2  ).exists()
+        user_Exist = addProduct.objects.filter( venId_id = vendorId, id  =  productId  ).exists()
 
         # print("userId_Exist", userId_Exist)
 
         if  user_Exist:
 
-            addProduct.objects.filter( venId_id = pk1,  id  =  pk2  ).update(recycleBin = 1)
+            addProduct.objects.filter( venId_id = vendorId,  id  =  productId  ).update(recycleBin = 1)
 
             msg = {
                 'msg' : "Item-Deleted",
@@ -888,26 +888,26 @@ def DeleteProductByID_view(request, pk1, pk2 ):
 
 # pk is vendor id / pk2 is product  ID
 @api_view(['POST'])
-def DuplicateProductByID_view(request, pk1, pk2 ):
+def DuplicateProductByID_view(request, vendorId, productId ):
     
     msg = {}
 
     if request.method == "POST":
 
         # print("----------Line no 257 POST userAPI- CartID---------")
-        # print("pk1- " , pk1)
-        # print("pk2- " , pk2)
+        # print("vendorId- " , vendorId)
+        # print("productId- " , productId)
 
      
         
-        product_Exist = addProduct.objects.filter( venId_id = pk1, id  =  pk2  ).exists()
+        product_Exist = addProduct.objects.filter( venId_id = vendorId, id  =  productId  ).exists()
 
 
         if  product_Exist:
 
             # print("it exist ")
 
-            query = addProduct.objects.filter( venId_id = pk1, id  =  pk2  ).values()
+            query = addProduct.objects.filter( venId_id = vendorId, id  =  productId  ).values()
 
             namee = query[0]["name"]+" COPIED "
             mrpp =  query[0]["mrp"] 
@@ -930,7 +930,7 @@ def DuplicateProductByID_view(request, pk1, pk2 ):
             image_5 =  query[0]["image5"]  
 
             try:
-                query = addProduct( venId_id = pk1 , name = namee ,  mrp = mrpp, discountPercent = discountPercentt , 
+                query = addProduct( venId_id = vendorId , name = namee ,  mrp = mrpp, discountPercent = discountPercentt , 
                             
                             productType = productTypee , Category = Categoryy , subCategory = subCategoryy , 
 
@@ -967,28 +967,28 @@ def DuplicateProductByID_view(request, pk1, pk2 ):
 
 # pk is user id / pk2 is product ID
 @api_view(['DELETE'])
-def PermanentDeleteProductByID_view(request, pk1, pk2 ):
+def PermanentDeleteProductByID_view(request, vendorId, productId ):
     
     msg = {}
 
     if request.method == "DELETE":
 
-        print("----------Line no 1058 PermanentDeleteProductByID_view---------")
-        print("vendorId- " , pk1)
-        print("productId- " , pk2)
+        # print("----------Line no 1058 PermanentDeleteProductByID_view---------")
+        # print("vendorId- " , vendorId)
+        # print("productId- " , productId)
 
         # MyModel.objects.filter(pk=some_value).update(field1='some value')
         
-        user_Exist = addProduct.objects.filter( venId_id = pk1, id  =  pk2  ).exists()
+        user_Exist = addProduct.objects.filter( venId_id = vendorId, id  =  productId  ).exists()
 
         # print("userId_Exist", userId_Exist)
 
         if  user_Exist:
 
-            print("userId_Exist", user_Exist)
+            # print("userId_Exist", user_Exist)
 
-            delete_Query = addProduct.objects.filter( venId_id = pk1, id  =  pk2  )
-            print(delete_Query)
+            delete_Query = addProduct.objects.filter( venId_id = vendorId, id  =  productId  )
+            # print(delete_Query)
             
             delete_Query.delete()
 

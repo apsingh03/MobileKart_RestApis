@@ -18,7 +18,7 @@ urlpatterns = [
 
     path('add-shipping', views.AddShipping_view , name="AddShipping_view" ),
 
-    path('get-subcat-bycategory/<str:pk>/', views.GetSubCategoryByID_view , name="GetSubCategoryByID_view" ),
+    path('get-subcat-bycategory/<str:catName>/', views.GetSubCategoryByID_view , name="GetSubCategoryByID_view" ),
 
     path('signup', views.Signup_view , name="Signup_view" ),
 
@@ -26,21 +26,21 @@ urlpatterns = [
 
     path('addproduct', views.addProduct_view , name="addProduct_view" ),
 
-    path('filter-productdetail-bySlug/<str:pk>/', views.FilterProductBySlug_view , name="FilterProductBySlug_view" ),
+    path('filter-productdetail-bySlug/<str:filterSlug>/', views.FilterProductBySlug_view , name="FilterProductBySlug_view" ),
 
-    path('set-featuredProduct-byId/<str:pk1>/<str:pk2>/', views.SetFeaturedProductById_view , name="SetFeaturedProductById_view" ),
+    path('set-featuredProduct-byId/<str:productId>/<str:featuredStatus>/', views.SetFeaturedProductById_view , name="SetFeaturedProductById_view" ),
 
     
-    path('update-productdetail-byId/<str:pk>/', views.UpdateProductByID_view , name="UpdateProductByID_view" ),
+    path('update-productdetail-byId/<str:productId>/', views.UpdateProductByID_view , name="UpdateProductByID_view" ),
 
         
-    path('delete-product-byId/<str:pk1>/<str:pk2>/', views.DeleteProductByID_view , name="DeleteProductByID_view" ),
+    path('delete-product-byId/<str:vendorId>/<str:productId>/', views.DeleteProductByID_view , name="DeleteProductByID_view" ),
 
-     path('duplicate-product-byId/<str:pk1>/<str:pk2>/', views.DuplicateProductByID_view , name="DuplicateProductByID_view" ),
+     path('duplicate-product-byId/<str:vendorId>/<str:productId>/', views.DuplicateProductByID_view , name="DuplicateProductByID_view" ),
 
 
     
-     path('permanent-delete-product-byId/<str:pk1>/<str:pk2>/', views.PermanentDeleteProductByID_view , name="PermanentDeleteProductByID_view" ),
+     path('permanent-delete-product-byId/<str:vendorId>/<str:productId>/', views.PermanentDeleteProductByID_view , name="PermanentDeleteProductByID_view" ),
 
 
 ]

@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
-    'adminApi',
     'userApi',
     'vendor',
     'rest_framework',
@@ -92,31 +91,21 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 
-# FOR PYTHON ANY WHERE 
+
 DATABASES = {
     'default': {
-        'default': dj_database_url.config (
- default = "sqlite:///" + os.path.join(BASE_DIR, "db.sqlite3")
-        )
-       
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'flipkart',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3308',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
+ 
     }
 }
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'flipkart',
-#         'USER': 'root',
-#         'PASSWORD': '',
-#         'HOST': 'localhost',
-#         'PORT': '3308',
-#         'OPTIONS': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-#         }
- 
-#     }
-# }
 
 
 # Password validation
