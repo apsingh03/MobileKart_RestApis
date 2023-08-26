@@ -26,5 +26,14 @@ urlpatterns = [
         "add-address/<str:userId>/", views.user_address_view, name="user_address_view"
     ),
     path("userLogin/", views.user_Login_view, name="user_Login_view"),
-    path("placeOrder/", views.user_PlaceOrder_view, name="user_PlaceOrder_view"),
+    path(
+        "placeOrder/<str:userId>/",
+        views.user_PlaceOrder_view,
+        name="user_PlaceOrder_view",
+    ),
+    path(
+        "addToWishlist/<str:userId>/<str:productId>/",
+        views.user_addToWishlist_view,
+        name="user_addToWishlist_view",
+    ),
 ]
